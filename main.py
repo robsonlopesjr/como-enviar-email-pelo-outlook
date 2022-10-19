@@ -23,10 +23,13 @@ def calcular_quantidade_vendida(dados):
 
 
 def calcular_ticket_medio(faturamento, quantidade):
-    ticket = faturamento['Valor Final'] / quantidade['Quantidade']
+    ticket = (faturamento['Valor Final'] / quantidade['Quantidade']).to_frame()
 
     # transformar em tabela
-    return ticket.to_frame()
+    # ticket = ticket.to_frame()
+
+    # Renomear coluna
+    return ticket.rename(columns={0: 'Ticket Médio'})
 
 
 def enviar_email(mail_to, faturamento, quantidade, ticket_medio):
@@ -38,11 +41,11 @@ def enviar_email(mail_to, faturamento, quantidade, ticket_medio):
     <p>Prezados,</p>
     <p>Segue o Relatório de Vendas por cada loja.</p>
     <p>Faturamento:</p>
-    {faturamento.to_html()}
+    {faturamento.to_html(formatters={'Valor Final': 'R${:,.2f}'.format})}
     <p>Quantidade Vendida:</p>
     {quantidade.to_html()}
     <p>Ticket Médio dos Produtos em cada loja:</p>
-    {ticket_medio.to_html()}
+    {ticket_medio.to_html(formatters={'Ticket Médio': 'R${:,.2f}'.format})}
     <p>Qualquer dúvida estou a disposição.</p>
     <p>Att.,</p>
     <p>Robson</p>
