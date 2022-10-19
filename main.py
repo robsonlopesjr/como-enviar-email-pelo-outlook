@@ -11,10 +11,9 @@ dados = pd.read_excel('Vendas.xlsx')
 
 # Faturamento por loja
 faturamento = dados[['ID Loja', 'Valor Final']].groupby('ID Loja').sum()
-print(faturamento)
 
 # Quantidade de produtos vendidos por loja
-
+quantidade = dados[['ID Loja', 'Quantidade']].groupby('ID Loja').sum()
 
 # Ticket médio por produto em cada loja (Fatuamento / quantidade)
 
